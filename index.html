@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinhasFinanças - Controle Financeiro Inteligente para Mac</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            padding: 20px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: white;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 80px 0 100px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.15;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(135deg, #ffd700 0%, #ffba08 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #0b7dda;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        /* Free Features */
+        .features {
+            background: white;
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1a1a2e;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .feature-card {
+            background: #f8fafb;
+            padding: 30px;
+            border-radius: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eef2f5;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(15, 155, 88, 0.1);
+        }
+        
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+        
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Comparison Table */
+        .comparison {
+            background: #f8fafb;
+            padding: 100px 0;
+        }
+        
+        .comparison-table {
+            max-width: 700px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .comparison-table thead {
+            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+            color: white;
+        }
+        
+        .comparison-table th {
+            padding: 16px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .comparison-table th:first-child {
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        .comparison-table td:first-child {
+            text-align: left;
+            color: #333;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .check {
+            color: #0f9b58;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .cross {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+        
+        .limit {
+            color: #e67e22;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        
+        /* Pro Section */
+        .pro-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+            padding: 100px 0;
+            color: white;
+        }
+        
+        .pro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .pro-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .pro-text p {
+            font-size: 1.15rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .pro-features {
+            list-style: none;
+        }
+        
+        .pro-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 1.05rem;
+        }
+        
+        .pro-features li::before {
+            content: "✓";
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .pro-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: #1a1a2e;
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: white;
+            padding: 100px 0;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: #f8fafb;
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 2px solid #eef2f5;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(15, 155, 88, 0.15);
+        }
+        
+        .pricing-card.featured {
+            border-color: #0f9b58;
+            background: linear-gradient(135deg, rgba(15, 155, 88, 0.03) 0%, rgba(11, 125, 218, 0.03) 100%);
+        }
+        
+        .pricing-card.featured::before {
+            content: "Melhor valor";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .pricing-card .price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #999;
+        }
+        
+        .pricing-card .price-detail {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 24px;
+        }
+        
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 14px 24px;
+        }
+        
+        .pricing-card.featured .btn {
+            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: rgba(255,255,255,0.7);
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .pro-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <div class="logo-icon">💰</div>
+                    MinhasFinanças
+                </a>
+                <div class="nav-links">
+                    <a href="#features">Recursos</a>
+                    <a href="#compare">Comparar</a>
+                    <a href="#premium">Premium</a>
+                    <a href="#pricing">Preços</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Controle financeiro <span>inteligente</span> para Mac</h1>
+            <p class="subtitle">Gerencie suas finanças pessoais com praticidade. Transações, contas, cartões de crédito, investimentos e relatórios — tudo em um app nativo para macOS.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Baixar na Mac App Store
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    Conheça os recursos
+                </a>
+            </div>
+            <div class="hero-badges">
+                <div class="hero-badge">🍎 Nativo para macOS</div>
+                <div class="hero-badge">☁️ Sincronização iCloud</div>
+                <div class="hero-badge">🤖 IA para categorização</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Tudo que você precisa</h2>
+            <p class="section-subtitle">Comece gratuitamente com os recursos essenciais para organizar sua vida financeira.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard</h3>
+                    <p>Visão geral das suas finanças com gráficos e resumos. Veja receitas, despesas e saldo em tempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3>Transações</h3>
+                    <p>Registre receitas e despesas facilmente. Suporte a parcelas, recorrências e transferências entre contas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏦</div>
+                    <h3>Contas Bancárias</h3>
+                    <p>Gerencie suas contas correntes e cartões de crédito com controle de faturas e fechamento.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📂</div>
+                    <h3>Categorias</h3>
+                    <p>Organize gastos por categorias e subcategorias personalizadas. Saiba exatamente para onde vai seu dinheiro.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Multi-Pessoa</h3>
+                    <p>Acompanhe gastos por pessoa. Ideal para casais ou famílias que compartilham finanças.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Recorrências</h3>
+                    <p>Cadastre despesas recorrentes e o app gera as transações automaticamente todo mês.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Sincronização iCloud</h3>
+                    <p>Sincronize seus dados entre dispositivos automaticamente via iCloud. Seus dados sempre atualizados. <span style="color:#0f9b58; font-weight:600;">Premium</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="comparison" id="compare">
+        <div class="container">
+            <h2 class="section-title">Gratuito vs Premium</h2>
+            <p class="section-subtitle">Comece de graça e faça upgrade quando precisar de mais poder.</p>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Recurso</th>
+                            <th>Gratuito</th>
+                            <th>Premium ✨</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dashboard</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Transações</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Categorias existentes</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Criar novas categorias</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Subcategorias por categoria</td>
+                            <td class="limit">Máx. 2</td>
+                            <td class="check">Ilimitadas</td>
+                        </tr>
+                        <tr>
+                            <td>Contas bancárias</td>
+                            <td class="limit">Máx. 2</td>
+                            <td class="check">Ilimitadas</td>
+                        </tr>
+                        <tr>
+                            <td>Cartões de crédito</td>
+                            <td class="limit">Máx. 2</td>
+                            <td class="check">Ilimitados</td>
+                        </tr>
+                        <tr>
+                            <td>Cartão de Benefícios (VR/VA)</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Investimentos (Ações, FIIs, RF)</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Relatórios e Gráficos</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Auditoria Financeira</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Importar/Exportar dados</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Importar CSV (extratos)</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>IA Categorização automática</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Sincronização iCloud</td>
+                            <td class="cross">✗</td>
+                            <td class="check">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pro-section" id="premium">
+        <div class="container">
+            <div class="pro-content">
+                <div class="pro-text">
+                    <span class="pro-badge">👑 Premium</span>
+                    <h2>Desbloqueie todo o potencial</h2>
+                    <p>Leve o controle financeiro ao próximo nível com recursos avançados para quem leva suas finanças a sério.</p>
+                    <ul class="pro-features">
+                        <li>Investimentos: Ações, FIIs, Renda Fixa com aportes e dividendos</li>
+                        <li>Relatórios detalhados de gastos e receitas</li>
+                        <li>Auditoria para encontrar inconsistências</li>
+                        <li>IA que categoriza transações automaticamente</li>
+                        <li>Importar extratos CSV de qualquer banco</li>
+                        <li>Export/import de dados para backup</li>
+                        <li>Contas, cartões e categorias ilimitados</li>
+                        <li>Cartão de Benefícios (VR, VA, VT)</li>
+                        <li>Sincronização via iCloud entre dispositivos</li>
+                    </ul>
+                </div>
+                <div class="pro-visual" style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%); border-radius: 24px; padding: 50px; font-size: 6rem;">
+                        💰
+                    </div>
+                    <p style="margin-top: 24px; font-size: 1.2rem; opacity: 0.8;">Sua vida financeira sob controle total</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Escolha seu plano</h2>
+            <p class="section-subtitle">Preços acessíveis para quem quer controle financeiro de verdade.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Mensal</h3>
+                    <div class="price">R$ 5,90 <span>/mês</span></div>
+                    <div class="price-detail">Cobrado mensalmente</div>
+                    <a href="#" class="btn btn-secondary" style="color: #0b7dda; border-color: #0b7dda;">
+                        Assinar Mensal
+                    </a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Anual</h3>
+                    <div class="price">R$ 69,90 <span>/ano</span></div>
+                    <div class="price-detail">~R$ 5,83/mês</div>
+                    <a href="#" class="btn btn-primary">
+                        Assinar Anual
+                    </a>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 24px; color: #999; font-size: 0.9rem;">
+                Cancele a qualquer momento · Renovação automática · Termos da Apple
+            </p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Política de Privacidade</a>
+                <a href="terms.html">Termos de Uso</a>
+                <a href="mailto:matheus.jk.weber@gmail.com">Contato</a>
+                <a href="#">Mac App Store</a>
+            </div>
+            <p class="copyright">&copy; 2026 MinhasFinanças. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
