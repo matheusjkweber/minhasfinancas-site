@@ -45,15 +45,15 @@
             gap: 12px;
             color: white;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             text-decoration: none;
         }
         
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             background: rgba(255,255,255,0.25);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
@@ -171,20 +171,90 @@
             color: rgba(255,255,255,0.9);
         }
 
-        .hero-preview {
-            margin-top: 30px;
-            display: inline-block;
+        .hero-carousel {
+            position: relative;
+            margin: 30px auto 0;
+            width: min(860px, 92vw);
             border-radius: 24px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-            max-width: 420px;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 22px 65px rgba(0,0,0,0.28);
+            background: rgba(0, 0, 0, 0.15);
         }
 
-        .hero-preview img {
-            display: block;
+        .hero-carousel-track {
+            position: relative;
+            aspect-ratio: 16 / 10;
+        }
+
+        .hero-carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+
+        .hero-carousel-slide.is-active {
+            opacity: 1;
+        }
+
+        .hero-carousel-slide img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(13, 15, 24, 0.58);
+            color: white;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+        }
+
+        .hero-carousel-control.prev {
+            left: 12px;
+        }
+
+        .hero-carousel-control.next {
+            right: 12px;
+        }
+
+        .hero-carousel-dots {
+            position: absolute;
+            left: 50%;
+            bottom: 12px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .hero-carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 0;
+            background: rgba(255,255,255,0.48);
+            cursor: pointer;
+        }
+
+        .hero-carousel-dot.is-active {
+            background: rgba(255,255,255,0.95);
+        }
+
+        .hero-carousel-note {
+            margin-top: 10px;
+            font-size: 0.82rem;
+            opacity: 0.78;
         }
         
         /* Free Features */
@@ -532,6 +602,16 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .hero-carousel {
+                border-radius: 18px;
+            }
+
+            .hero-carousel-control {
+                width: 34px;
+                height: 34px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -540,7 +620,7 @@
         <div class="container">
             <nav>
                 <a href="/" class="logo">
-                    <div class="logo-icon"><img src="assets/cosmo-financas-appstore.png" alt="Ícone do Cosmo Finanças"></div>
+                    <div class="logo-icon"><img src="assets/cosmo-financas-logo.png" alt="Ícone do Cosmo Finanças"></div>
                     Cosmo Finanças
                 </a>
                 <div class="nav-links">
@@ -571,9 +651,27 @@
                 <div class="hero-badge">☁️ Sincronização iCloud</div>
                 <div class="hero-badge">🤖 IA para categorização</div>
             </div>
-            <div class="hero-preview">
-                <img src="assets/cosmo-financas-appstore.png" alt="Visual do Cosmo Finanças">
+            <div class="hero-carousel" id="heroCarousel" aria-label="Banners promocionais">
+                <div class="hero-carousel-track">
+                    <div class="hero-carousel-slide is-active">
+                        <img src="assets/gemini-banner-1.png" alt="Banner promocional 1 do Cosmo Finanças">
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <img src="assets/gemini-banner-2.png" alt="Banner promocional 2 do Cosmo Finanças">
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <img src="assets/gemini-banner-3.png" alt="Banner promocional 3 do Cosmo Finanças">
+                    </div>
+                </div>
+                <button class="hero-carousel-control prev" type="button" aria-label="Banner anterior">&#8249;</button>
+                <button class="hero-carousel-control next" type="button" aria-label="Próximo banner">&#8250;</button>
+                <div class="hero-carousel-dots">
+                    <button class="hero-carousel-dot is-active" type="button" aria-label="Ir para banner 1"></button>
+                    <button class="hero-carousel-dot" type="button" aria-label="Ir para banner 2"></button>
+                    <button class="hero-carousel-dot" type="button" aria-label="Ir para banner 3"></button>
+                </div>
             </div>
+            <p class="hero-carousel-note">Carrossel de banners promocionais.</p>
         </div>
     </section>
     
@@ -784,5 +882,67 @@
             <p class="copyright">&copy; 2026 Cosmo Finanças. Todos os direitos reservados.</p>
         </div>
     </footer>
+    <script>
+        (function () {
+            const carousel = document.getElementById('heroCarousel');
+            if (!carousel) return;
+
+            const slides = Array.from(carousel.querySelectorAll('.hero-carousel-slide'));
+            const dots = Array.from(carousel.querySelectorAll('.hero-carousel-dot'));
+            const prevButton = carousel.querySelector('.hero-carousel-control.prev');
+            const nextButton = carousel.querySelector('.hero-carousel-control.next');
+            const intervalMs = 4500;
+            let current = 0;
+            let timer = null;
+
+            function render(index) {
+                current = index;
+                slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+                dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+            }
+
+            function next() {
+                render((current + 1) % slides.length);
+            }
+
+            function previous() {
+                render((current - 1 + slides.length) % slides.length);
+            }
+
+            function start() {
+                stop();
+                timer = setInterval(next, intervalMs);
+            }
+
+            function stop() {
+                if (timer) {
+                    clearInterval(timer);
+                    timer = null;
+                }
+            }
+
+            nextButton.addEventListener('click', function () {
+                next();
+                start();
+            });
+
+            prevButton.addEventListener('click', function () {
+                previous();
+                start();
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function () {
+                    render(index);
+                    start();
+                });
+            });
+
+            carousel.addEventListener('mouseenter', stop);
+            carousel.addEventListener('mouseleave', start);
+            render(0);
+            start();
+        })();
+    </script>
 </body>
 </html>
