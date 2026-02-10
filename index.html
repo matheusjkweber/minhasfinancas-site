@@ -662,14 +662,22 @@
                     <div class="hero-carousel-slide">
                         <img src="assets/gemini-banner-3.png" alt="Banner promocional 3 do Cosmo Finanças">
                     </div>
+                    <div class="hero-carousel-slide">
+                        <img src="assets/gemini-banner-4.png" alt="Banner promocional 4 do Cosmo Finanças">
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <img src="assets/gemini-banner-5.png" alt="Banner promocional 5 do Cosmo Finanças">
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <img src="assets/gemini-banner-6.png" alt="Banner promocional 6 do Cosmo Finanças">
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <img src="assets/gemini-banner-7.png" alt="Banner promocional 7 do Cosmo Finanças">
+                    </div>
                 </div>
                 <button class="hero-carousel-control prev" type="button" aria-label="Banner anterior">&#8249;</button>
                 <button class="hero-carousel-control next" type="button" aria-label="Próximo banner">&#8250;</button>
-                <div class="hero-carousel-dots">
-                    <button class="hero-carousel-dot is-active" type="button" aria-label="Ir para banner 1"></button>
-                    <button class="hero-carousel-dot" type="button" aria-label="Ir para banner 2"></button>
-                    <button class="hero-carousel-dot" type="button" aria-label="Ir para banner 3"></button>
-                </div>
+                <div class="hero-carousel-dots"></div>
             </div>
             <p class="hero-carousel-note">Carrossel de banners promocionais.</p>
         </div>
@@ -888,12 +896,25 @@
             if (!carousel) return;
 
             const slides = Array.from(carousel.querySelectorAll('.hero-carousel-slide'));
-            const dots = Array.from(carousel.querySelectorAll('.hero-carousel-dot'));
+            const dotsContainer = carousel.querySelector('.hero-carousel-dots');
             const prevButton = carousel.querySelector('.hero-carousel-control.prev');
             const nextButton = carousel.querySelector('.hero-carousel-control.next');
             const intervalMs = 4500;
             let current = 0;
             let timer = null;
+            let dots = [];
+
+            function buildDots() {
+                dotsContainer.innerHTML = '';
+                dots = slides.map((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'hero-carousel-dot';
+                    dot.type = 'button';
+                    dot.setAttribute('aria-label', `Ir para banner ${index + 1}`);
+                    dotsContainer.appendChild(dot);
+                    return dot;
+                });
+            }
 
             function render(index) {
                 current = index;
@@ -931,6 +952,7 @@
                 start();
             });
 
+            buildDots();
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', function () {
                     render(index);
