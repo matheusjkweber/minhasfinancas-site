@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MinhasFinanças - Controle Financeiro Inteligente para Mac</title>
+    <title>Cosmo Finanças - Controle Financeiro Inteligente para Mac</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -52,12 +52,17 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.25);
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         
         .nav-links {
@@ -164,6 +169,22 @@
             border-radius: 20px;
             font-size: 0.9rem;
             color: rgba(255,255,255,0.9);
+        }
+
+        .hero-preview {
+            margin-top: 30px;
+            display: inline-block;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            max-width: 420px;
+        }
+
+        .hero-preview img {
+            display: block;
+            width: 100%;
+            height: auto;
         }
         
         /* Free Features */
@@ -519,8 +540,8 @@
         <div class="container">
             <nav>
                 <a href="/" class="logo">
-                    <div class="logo-icon">💰</div>
-                    MinhasFinanças
+                    <div class="logo-icon"><img src="assets/cosmo-financas-appstore.png" alt="Ícone do Cosmo Finanças"></div>
+                    Cosmo Finanças
                 </a>
                 <div class="nav-links">
                     <a href="#features">Recursos</a>
@@ -549,6 +570,9 @@
                 <div class="hero-badge">🍎 Nativo para macOS</div>
                 <div class="hero-badge">☁️ Sincronização iCloud</div>
                 <div class="hero-badge">🤖 IA para categorização</div>
+            </div>
+            <div class="hero-preview">
+                <img src="assets/cosmo-financas-appstore.png" alt="Visual do Cosmo Finanças">
             </div>
         </div>
     </section>
@@ -712,8 +736,8 @@
                     </ul>
                 </div>
                 <div class="pro-visual" style="text-align: center;">
-                    <div style="background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%); border-radius: 24px; padding: 50px; font-size: 6rem;">
-                        💰
+                    <div style="background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%); border-radius: 24px; padding: 20px;">
+                        <img src="assets/cosmo-financas-appstore.png" alt="Ícone do Cosmo Finanças" style="width: 260px; border-radius: 18px; box-shadow: 0 14px 40px rgba(0,0,0,0.25);">
                     </div>
                     <p style="margin-top: 24px; font-size: 1.2rem; opacity: 0.8;">Sua vida financeira sob controle total</p>
                 </div>
@@ -728,8 +752,8 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3>Mensal</h3>
-                    <div class="price">R$ 5,90 <span>/mês</span></div>
-                    <div class="price-detail">Cobrado mensalmente</div>
+                    <div class="price">R$ 6,90 <span>/mês</span></div>
+                    <div class="price-detail">14 dias grátis · Cobrado mensalmente</div>
                     <a href="#" class="btn btn-secondary" style="color: #0b7dda; border-color: #0b7dda;">
                         Assinar Mensal
                     </a>
@@ -737,7 +761,7 @@
                 <div class="pricing-card featured">
                     <h3>Anual</h3>
                     <div class="price">R$ 69,90 <span>/ano</span></div>
-                    <div class="price-detail">~R$ 5,83/mês</div>
+                    <div class="price-detail">14 dias grátis · Pague 10 meses e use 12</div>
                     <a href="#" class="btn btn-primary">
                         Assinar Anual
                     </a>
@@ -757,9 +781,8 @@
                 <a href="mailto:matheus.jk.weber@gmail.com">Contato</a>
                 <a href="#">Mac App Store</a>
             </div>
-            <p class="copyright">&copy; 2026 MinhasFinanças. Todos os direitos reservados.</p>
+            <p class="copyright">&copy; 2026 Cosmo Finanças. Todos os direitos reservados.</p>
         </div>
     </footer>
 </body>
 </html>
-

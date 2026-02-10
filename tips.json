@@ -1,0 +1,23 @@
+{
+  "updatedAt": "2026-02-10T12:00:00Z",
+  "tips": [
+    {
+      "id": "import-csv-revisao",
+      "title": "Importe extratos com menos esforço",
+      "message": "Após corrigir categorias em um CSV, importe novamente arquivos parecidos para o app sugerir categorias automaticamente.",
+      "icon": "square.and.arrow.down.on.square"
+    },
+    {
+      "id": "icloud-backup",
+      "title": "Use sincronização e restauração iCloud",
+      "message": "No Premium, ative a sincronização iCloud para manter seus dados entre dispositivos e restaurar quando necessário.",
+      "icon": "icloud.and.arrow.up"
+    },
+    {
+      "id": "investimentos-rendimento",
+      "title": "Acompanhe rendimentos por ativo",
+      "message": "Em Investimentos, atualize cotação e rendimentos para ver a evolução real de cada posição.",
+      "icon": "chart.line.uptrend.xyaxis"
+    }
+  ]
+}
