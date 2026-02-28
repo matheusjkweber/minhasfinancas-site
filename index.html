@@ -3,968 +3,1202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmo Finanças - Controle Financeiro Inteligente para Mac</title>
+    <title>Cosmo Finanças — Controle Financeiro para Mac</title>
+    <meta name="description" content="Gerencie suas finanças pessoais no Mac com inteligência. Transações, contas a pagar, orçamentos, investimentos e relatórios — tudo nativo para macOS.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #1a1a2e;
-            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            padding: 20px 0;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: white;
-            font-weight: 700;
-            font-size: 1.35rem;
-            text-decoration: none;
-        }
-        
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            background: rgba(255,255,255,0.25);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        :root {
+            --green: #0f9b58;
+            --blue: #0b7dda;
+            --gold: #f5a623;
+            --dark: #0e0e1a;
+            --dark-card: #161628;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --border: #e5e7eb;
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --transition: 0.22s ease;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+            --shadow: 0 8px 30px rgba(0,0,0,0.10);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --grad: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+            --grad-glow: linear-gradient(135deg, rgba(15,155,88,0.15) 0%, rgba(11,125,218,0.15) 100%);
         }
 
-        .logo-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            background: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-links a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-links a:hover {
-            color: white;
-        }
-        
-        /* Hero */
-        .hero {
-            padding: 80px 0 100px;
-            text-align: center;
-            color: white;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.15;
-        }
-        
-        .hero h1 span {
-            background: linear-gradient(135deg, #ffd700 0%, #ffba08 100%);
+
+        /* ─── Utilities ────────────────────────────────────────── */
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+        .grad-text {
+            background: var(--grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .hero .subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            max-width: 650px;
-            margin: 0 auto 40px;
+        .gold-text {
+            background: linear-gradient(135deg, #ffd700 0%, #f5a623 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
+        .badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 14px; border-radius: 99px;
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
         }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+        .badge-green { background: rgba(15,155,88,0.12); color: var(--green); }
+        .badge-gold {
+            background: linear-gradient(135deg, #ffd700 0%, #f5a623 100%);
+            color: #7a4a00;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
+        .section-label {
+            display: block; text-align: center;
+            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--green);
+            margin-bottom: 14px;
         }
-        
-        .btn-primary {
-            background: white;
-            color: #0b7dda;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-        
-        .btn-primary:hover {
-            box-shadow: 0 6px 30px rgba(0,0,0,0.3);
-        }
-        
-        .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.25);
-        }
-        
-        .hero-badges {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .hero-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.15);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .hero-carousel {
-            position: relative;
-            margin: 30px auto 0;
-            width: min(860px, 92vw);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.25);
-            box-shadow: 0 22px 65px rgba(0,0,0,0.28);
-            background: rgba(0, 0, 0, 0.15);
-        }
-
-        .hero-carousel-track {
-            position: relative;
-            aspect-ratio: 16 / 10;
-        }
-
-        .hero-carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.45s ease;
-        }
-
-        .hero-carousel-slide.is-active {
-            opacity: 1;
-        }
-
-        .hero-carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .hero-carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            border: 0;
-            border-radius: 999px;
-            background: rgba(13, 15, 24, 0.58);
-            color: white;
-            font-size: 1.5rem;
-            line-height: 1;
-            cursor: pointer;
-            backdrop-filter: blur(6px);
-        }
-
-        .hero-carousel-control.prev {
-            left: 12px;
-        }
-
-        .hero-carousel-control.next {
-            right: 12px;
-        }
-
-        .hero-carousel-dots {
-            position: absolute;
-            left: 50%;
-            bottom: 12px;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-        }
-
-        .hero-carousel-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            border: 0;
-            background: rgba(255,255,255,0.48);
-            cursor: pointer;
-        }
-
-        .hero-carousel-dot.is-active {
-            background: rgba(255,255,255,0.95);
-        }
-
-        .hero-carousel-note {
-            margin-top: 10px;
-            font-size: 0.82rem;
-            opacity: 0.78;
-        }
-        
-        /* Free Features */
-        .features {
-            background: white;
-            padding: 100px 0;
-        }
-        
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1a1a2e;
+            text-align: center; font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+            font-weight: 800; color: var(--text); line-height: 1.2;
+            margin-bottom: 14px;
         }
-        
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 60px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .section-sub {
+            text-align: center; font-size: 1.05rem;
+            color: var(--text-muted); max-width: 560px;
+            margin: 0 auto 56px;
         }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-        
-        .feature-card {
-            background: #f8fafb;
-            padding: 30px;
-            border-radius: 16px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #eef2f5;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(15, 155, 88, 0.1);
-        }
-        
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            margin-bottom: 16px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a1a2e;
-        }
-        
-        .feature-card p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* Comparison Table */
-        .comparison {
-            background: #f8fafb;
-            padding: 100px 0;
-        }
-        
-        .comparison-table {
-            max-width: 700px;
-            margin: 0 auto;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
-        }
-        
-        .comparison-table table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-        
-        .comparison-table thead {
-            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
-            color: white;
-        }
-        
-        .comparison-table th {
-            padding: 16px 20px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        
-        .comparison-table th:first-child {
-            text-align: left;
-        }
-        
-        .comparison-table td {
-            padding: 14px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-        
-        .comparison-table td:first-child {
-            text-align: left;
-            color: #333;
-        }
-        
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .check {
-            color: #0f9b58;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        .cross {
-            color: #ccc;
-            font-size: 1.2rem;
-        }
-        
-        .limit {
-            color: #e67e22;
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-        
-        /* Pro Section */
-        .pro-section {
-            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
-            padding: 100px 0;
-            color: white;
-        }
-        
-        .pro-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-        
-        .pro-text h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .pro-text p {
-            font-size: 1.15rem;
-            opacity: 0.8;
-            margin-bottom: 30px;
-        }
-        
-        .pro-features {
-            list-style: none;
-        }
-        
-        .pro-features li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+
+        /* Reveal animation */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* ─── Nav ──────────────────────────────────────────────── */
+        #nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             padding: 12px 0;
-            font-size: 1.05rem;
+            transition: background 0.3s, box-shadow 0.3s;
         }
-        
-        .pro-features li::before {
-            content: "✓";
-            width: 24px;
-            height: 24px;
-            min-width: 24px;
-            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: white;
+        #nav.scrolled {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
         }
-        
-        .pro-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            color: #1a1a2e;
+        #nav .nav-inner {
+            display: flex; align-items: center; justify-content: space-between;
         }
-        
-        /* Pricing */
-        .pricing {
-            background: white;
-            padding: 100px 0;
+        .nav-logo {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; font-size: 1.15rem; color: white;
+            text-decoration: none; transition: color var(--transition);
         }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            max-width: 700px;
-            margin: 0 auto;
+        #nav.scrolled .nav-logo { color: var(--text); }
+        .nav-logo-icon {
+            width: 32px; height: 32px; border-radius: 8px; overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
         }
-        
-        .pricing-card {
-            background: #f8fafb;
-            border-radius: 16px;
-            padding: 40px 30px;
+        .nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.85); text-decoration: none;
+            font-size: 0.93rem; font-weight: 500;
+            transition: color var(--transition);
+        }
+        #nav.scrolled .nav-links a { color: var(--text-muted); }
+        .nav-links a:hover { color: white; }
+        #nav.scrolled .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--grad); color: white !important;
+            padding: 8px 20px; border-radius: 99px;
+            font-weight: 600 !important; font-size: 0.88rem !important;
+            transition: transform var(--transition), box-shadow var(--transition) !important;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(15,155,88,0.4) !important; }
+
+        /* ─── Hero ─────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(160deg, #0c2340 0%, #0a3d2b 40%, #0b2a4a 100%);
+            padding: 140px 0 80px;
             text-align: center;
-            border: 2px solid #eef2f5;
-            transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
+            overflow: hidden;
         }
-        
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(15, 155, 88, 0.15);
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 20% 40%, rgba(15,155,88,0.22) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 30%, rgba(11,125,218,0.2) 0%, transparent 70%);
+            pointer-events: none;
         }
-        
-        .pricing-card.featured {
-            border-color: #0f9b58;
-            background: linear-gradient(135deg, rgba(15, 155, 88, 0.03) 0%, rgba(11, 125, 218, 0.03) 100%);
+        .hero-inner { position: relative; z-index: 1; }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+            padding: 6px 16px; border-radius: 99px;
+            font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9);
+            margin-bottom: 28px; letter-spacing: 0.04em;
         }
-        
-        .pricing-card.featured::before {
-            content: "Melhor valor";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 900; color: white;
+            line-height: 1.08; letter-spacing: -0.02em;
+            margin-bottom: 22px;
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255,255,255,0.75);
+            max-width: 580px; margin: 0 auto 40px;
+        }
+        .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 14px 28px; border-radius: 12px;
+            font-weight: 600; font-size: 1rem;
+            text-decoration: none;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-white {
+            background: white; color: var(--blue);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        }
+        .btn-white:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .btn-outline {
+            background: rgba(255,255,255,0.10);
+            border: 1.5px solid rgba(255,255,255,0.28);
             color: white;
-            padding: 4px 16px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
         }
-        
-        .pricing-card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 8px;
+        .btn-outline:hover { background: rgba(255,255,255,0.18); }
+        .btn-grad { background: var(--grad); color: white; box-shadow: 0 4px 20px rgba(15,155,88,0.35); }
+        .btn-grad:hover { box-shadow: 0 8px 32px rgba(15,155,88,0.45); }
+
+        .hero-badges { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 52px; }
+        .hero-badge {
+            display: flex; align-items: center; gap: 7px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            padding: 7px 16px; border-radius: 99px;
+            font-size: 0.85rem; color: rgba(255,255,255,0.88);
         }
-        
-        .pricing-card .price {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: #1a1a2e;
+
+        /* Carousel */
+        .carousel-wrap {
+            position: relative; margin: 0 auto;
+            width: min(900px, 94vw); border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+        .carousel-track { position: relative; aspect-ratio: 16/10; }
+        .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+        .carousel-slide.is-active { opacity: 1; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 38px; height: 38px; border: 0; border-radius: 50%;
+            background: rgba(0,0,0,0.5); color: white;
+            font-size: 1.4rem; line-height: 1; cursor: pointer;
+            backdrop-filter: blur(8px); transition: background var(--transition);
+        }
+        .carousel-btn:hover { background: rgba(0,0,0,0.7); }
+        .carousel-btn.prev { left: 14px; }
+        .carousel-btn.next { right: 14px; }
+        .carousel-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; }
+        .carousel-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            border: 0; background: rgba(255,255,255,0.4); cursor: pointer;
+            transition: background var(--transition), transform var(--transition);
+        }
+        .carousel-dot.is-active { background: white; transform: scale(1.25); }
+
+        /* ─── Stats bar ────────────────────────────────────────── */
+        .stats-bar {
+            background: var(--grad);
+            padding: 36px 0;
+        }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 0; text-align: center;
+        }
+        .stat-item {
+            padding: 12px 16px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 900; color: white; line-height: 1;
             margin-bottom: 4px;
         }
-        
-        .pricing-card .price span {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #999;
+        .stat-label { font-size: 0.88rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+        /* ─── Features ─────────────────────────────────────────── */
+        .features { padding: 100px 0; background: white; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 20px;
         }
-        
-        .pricing-card .price-detail {
-            font-size: 0.9rem;
-            color: #999;
-            margin-bottom: 24px;
+        .feat-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
         }
-        
-        .pricing-card .btn {
+        .feat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(15,155,88,0.10);
+            border-color: rgba(15,155,88,0.25);
+        }
+        .feat-icon {
+            width: 52px; height: 52px;
+            background: var(--grad);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 16px;
+            box-shadow: 0 4px 14px rgba(15,155,88,0.25);
+        }
+        .feat-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 7px; }
+        .feat-card p { font-size: 0.93rem; color: var(--text-muted); line-height: 1.6; }
+        .feat-card .feat-tag {
+            display: inline-block; margin-top: 12px;
+            font-size: 0.73rem; font-weight: 700;
+            color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase;
+        }
+
+        /* NEW badge on cards */
+        .feat-card.feat-new { position: relative; }
+        .feat-card.feat-new::after {
+            content: "NOVO";
+            position: absolute; top: 18px; right: 18px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f5a623 100%);
+            color: white; font-size: 0.65rem; font-weight: 800;
+            padding: 3px 8px; border-radius: 99px; letter-spacing: 0.08em;
+        }
+
+        /* ─── Feature Spotlight ────────────────────────────────── */
+        .spotlight { padding: 80px 0; }
+        .spotlight:nth-child(even) { background: var(--bg-light); }
+        .spotlight-inner {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 72px; align-items: center;
+        }
+        .spotlight-inner.reverse { direction: rtl; }
+        .spotlight-inner.reverse > * { direction: ltr; }
+        .spotlight-text .badge { margin-bottom: 16px; }
+        .spotlight-text h2 {
+            font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+            font-weight: 800; line-height: 1.2; margin-bottom: 16px;
+        }
+        .spotlight-text p { font-size: 1.02rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.7; }
+        .spotlight-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .spotlight-list li {
+            display: flex; align-items: flex-start; gap: 10px;
+            font-size: 0.97rem; color: var(--text-muted);
+        }
+        .spotlight-list li::before {
+            content: "✓";
+            min-width: 22px; height: 22px;
+            background: var(--grad); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72rem; font-weight: 800; color: white;
+            margin-top: 1px;
+        }
+        .spotlight-visual {
+            background: var(--grad);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            min-height: 260px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .spotlight-mockup {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius);
+            padding: 20px 24px;
             width: 100%;
-            justify-content: center;
-            padding: 14px 24px;
         }
-        
-        .pricing-card.featured .btn {
-            background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%);
-            color: white;
+        .mockup-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.88rem; color: white;
         }
-        
-        /* Footer */
+        .mockup-row:last-child { border-bottom: none; }
+        .mockup-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+        .mockup-dot.green { background: #4ade80; }
+        .mockup-dot.red { background: #f87171; }
+        .mockup-dot.yellow { background: #fbbf24; }
+        .mockup-dot.blue { background: #60a5fa; }
+        .mockup-label { flex: 1; font-weight: 500; }
+        .mockup-val { font-weight: 700; font-variant-numeric: tabular-nums; }
+        .mockup-val.pos { color: #4ade80; }
+        .mockup-val.neg { color: #f87171; }
+        .mockup-bar-wrap { margin-top: 8px; background: rgba(255,255,255,0.12); border-radius: 99px; height: 6px; }
+        .mockup-bar-fill { height: 6px; border-radius: 99px; }
+
+        /* ─── Comparison ───────────────────────────────────────── */
+        .comparison { padding: 100px 0; background: white; }
+        .comp-wrap { max-width: 780px; margin: 0 auto; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); }
+        .comp-table { width: 100%; border-collapse: collapse; background: white; }
+        .comp-table thead { background: var(--grad); }
+        .comp-table th {
+            padding: 18px 22px; text-align: center;
+            font-weight: 700; color: white; font-size: 0.95rem;
+        }
+        .comp-table th:first-child { text-align: left; }
+        .comp-table td {
+            padding: 13px 22px; border-bottom: 1px solid #f0f4f8;
+            text-align: center; font-size: 0.93rem; color: #444;
+        }
+        .comp-table td:first-child { text-align: left; color: #222; font-weight: 500; }
+        .comp-table tr:last-child td { border-bottom: none; }
+        .comp-table tr:hover td { background: #f9fafb; }
+        .comp-table thead tr:first-child th:nth-child(3) { position: relative; }
+        .ck { color: var(--green); font-size: 1.1rem; font-weight: 800; }
+        .cx { color: #d1d5db; font-size: 1.1rem; }
+        .lim { color: #e67e22; font-weight: 600; font-size: 0.83rem; }
+        .comp-table .new-row td { background: rgba(245, 166, 35, 0.04); }
+        .comp-table .new-row td:first-child::after {
+            content: " ✦";
+            color: var(--gold); font-size: 0.75rem;
+        }
+        .comp-section-header td {
+            background: var(--bg-light) !important;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text-muted) !important; padding: 10px 22px;
+        }
+
+        /* ─── Premium Section ──────────────────────────────────── */
+        .premium {
+            background: linear-gradient(135deg, #0d0e1e 0%, #1a1a30 50%, #0d1e14 100%);
+            padding: 100px 0; color: white; position: relative; overflow: hidden;
+        }
+        .premium::before {
+            content: '';
+            position: absolute; top: -100px; left: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(15,155,88,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .premium::after {
+            content: '';
+            position: absolute; bottom: -100px; right: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(11,125,218,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .premium-inner {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 64px; align-items: center; position: relative; z-index: 1;
+        }
+        .premium-text .section-label { text-align: left; }
+        .premium-text h2 { font-size: clamp(1.9rem, 3vw, 2.6rem); font-weight: 800; margin-bottom: 16px; }
+        .premium-text p { color: rgba(255,255,255,0.65); font-size: 1.05rem; margin-bottom: 28px; line-height: 1.7; }
+        .prem-list { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 32px; }
+        .prem-list li { display: flex; align-items: center; gap: 11px; font-size: 0.97rem; color: rgba(255,255,255,0.8); }
+        .prem-list li .check-icon {
+            width: 20px; height: 20px; min-width: 20px;
+            background: var(--grad); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 800;
+        }
+        .prem-list li.highlight { color: white; font-weight: 600; }
+        .premium-visual { text-align: center; }
+        .premium-app-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-lg);
+            padding: 32px; display: inline-block;
+        }
+        .premium-app-card img { width: 200px; border-radius: var(--radius); box-shadow: 0 16px 50px rgba(0,0,0,0.4); display: block; margin: 0 auto 20px; }
+        .premium-price-hint { font-size: 0.9rem; color: rgba(255,255,255,0.55); margin-top: 8px; }
+
+        /* ─── Pricing ──────────────────────────────────────────── */
+        .pricing { padding: 100px 0; background: var(--bg-light); }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 680px; margin: 0 auto; }
+        .price-card {
+            background: white; border: 2px solid var(--border);
+            border-radius: var(--radius-lg); padding: 36px 30px;
+            text-align: center; position: relative;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .price-card.featured {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(15,155,88,0.08);
+        }
+        .price-badge {
+            position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+            background: var(--grad); color: white;
+            padding: 4px 18px; border-radius: 99px;
+            font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+        }
+        .price-card h3 { font-size: 1rem; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; }
+        .price-amount { font-size: 2.8rem; font-weight: 900; color: var(--text); line-height: 1; margin-bottom: 4px; }
+        .price-amount sup { font-size: 1.2rem; font-weight: 600; vertical-align: top; margin-top: 6px; display: inline-block; }
+        .price-amount span { font-size: 1rem; font-weight: 500; color: var(--text-muted); }
+        .price-detail { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
+        .price-features { list-style: none; text-align: left; margin-bottom: 26px; display: flex; flex-direction: column; gap: 8px; }
+        .price-features li { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #444; }
+        .price-features li::before { content: "✓"; color: var(--green); font-weight: 700; }
+        .price-btn {
+            display: block; width: 100%; padding: 13px;
+            border-radius: var(--radius-sm); text-align: center;
+            font-weight: 600; font-size: 0.97rem; text-decoration: none;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .price-btn:hover { transform: translateY(-1px); }
+        .price-btn-outline { border: 2px solid var(--border); color: var(--text); background: white; }
+        .price-btn-outline:hover { border-color: var(--green); color: var(--green); }
+        .price-btn-grad { background: var(--grad); color: white; box-shadow: 0 4px 16px rgba(15,155,88,0.3); }
+        .price-btn-grad:hover { box-shadow: 0 6px 24px rgba(15,155,88,0.45); }
+        .pricing-note { text-align: center; margin-top: 22px; font-size: 0.85rem; color: var(--text-muted); }
+
+        /* ─── FAQ ──────────────────────────────────────────────── */
+        .faq { padding: 100px 0; background: white; }
+        .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+        .faq-item {
+            border: 1px solid var(--border); border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .faq-question {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 22px; cursor: pointer; user-select: none;
+            font-weight: 600; font-size: 0.98rem; gap: 12px;
+            transition: background var(--transition);
+        }
+        .faq-question:hover { background: var(--bg-light); }
+        .faq-chevron {
+            flex-shrink: 0; font-size: 1rem; color: var(--text-muted);
+            transition: transform var(--transition);
+        }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-size: 0.95rem; color: var(--text-muted); line-height: 1.7;
+        }
+        .faq-item.open .faq-answer { max-height: 300px; padding: 0 22px 18px; }
+
+        /* ─── CTA Band ─────────────────────────────────────────── */
+        .cta-band {
+            background: var(--grad); padding: 72px 0; text-align: center;
+        }
+        .cta-band h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: white; margin-bottom: 14px; }
+        .cta-band p { font-size: 1.05rem; color: rgba(255,255,255,0.8); margin-bottom: 32px; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+        /* ─── Footer ───────────────────────────────────────────── */
         footer {
-            background: #1a1a2e;
-            color: rgba(255,255,255,0.7);
-            padding: 40px 0;
-            text-align: center;
+            background: var(--dark); padding: 56px 0 30px;
         }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+        .footer-inner {
+            display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+            gap: 40px; margin-bottom: 44px;
         }
-        
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: color 0.2s;
+        .footer-brand .nav-logo { color: white; display: inline-flex; margin-bottom: 12px; }
+        .footer-brand p { color: rgba(255,255,255,0.45); font-size: 0.88rem; max-width: 280px; line-height: 1.7; }
+        .footer-col h4 { color: rgba(255,255,255,0.9); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+        .footer-col a {
+            display: block; color: rgba(255,255,255,0.5);
+            text-decoration: none; font-size: 0.9rem; margin-bottom: 8px;
+            transition: color var(--transition);
         }
-        
-        .footer-links a:hover {
-            color: white;
+        .footer-col a:hover { color: white; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 24px; text-align: center;
+            color: rgba(255,255,255,0.3); font-size: 0.82rem;
         }
-        
-        .copyright {
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .pro-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .hero-badges {
-                flex-direction: column;
-                align-items: center;
-            }
+        .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+        .footer-bottom a:hover { color: white; }
 
-            .hero-carousel {
-                border-radius: 18px;
-            }
-
-            .hero-carousel-control {
-                width: 34px;
-                height: 34px;
-                font-size: 1.2rem;
-            }
+        /* ─── Responsive ───────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .spotlight-inner, .premium-inner { grid-template-columns: 1fr; gap: 40px; }
+            .spotlight-inner.reverse { direction: ltr; }
+            .spotlight-visual { min-height: 200px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-item:nth-child(2) { border-right: none; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+        @media (max-width: 640px) {
+            .hero { padding: 120px 0 60px; }
+            .nav-links { display: none; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 380px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .hero h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <a href="/" class="logo">
-                    <div class="logo-icon"><img src="assets/cosmo-financas-logo.png" alt="Ícone do Cosmo Finanças"></div>
+
+<!-- ─── NAV ──────────────────────────────────────────────────────── -->
+<nav id="nav">
+    <div class="container nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-icon"><img src="assets/cosmo-financas-logo.png" alt="Cosmo Finanças"></div>
+            Cosmo Finanças
+        </a>
+        <div class="nav-links">
+            <a href="#features">Recursos</a>
+            <a href="#compare">Comparar</a>
+            <a href="#premium">Premium</a>
+            <a href="#pricing">Preços</a>
+            <a href="#faq">FAQ</a>
+            <a href="#" class="nav-cta">Baixar grátis</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────────────── -->
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-eyebrow">🍎 Feito para macOS · 100% Nativo</div>
+        <h1>Suas finanças sob<br><span class="gold-text">controle total</span></h1>
+        <p class="hero-sub">Transações, contas a pagar, orçamentos, investimentos e relatórios — num app elegante, rápido e feito do zero para Mac.</p>
+        <div class="hero-actions">
+            <a href="#" class="btn btn-white">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Baixar na Mac App Store
+            </a>
+            <a href="#features" class="btn btn-outline">Ver recursos →</a>
+        </div>
+        <div class="hero-badges">
+            <div class="hero-badge">☁️ Sincronização iCloud</div>
+            <div class="hero-badge">🤖 IA para categorização</div>
+            <div class="hero-badge">🔒 Dados 100% locais</div>
+            <div class="hero-badge">📊 Relatórios detalhados</div>
+        </div>
+
+        <!-- Carousel -->
+        <div class="carousel-wrap" id="heroCarousel">
+            <div class="carousel-track">
+                <div class="carousel-slide is-active"><img src="assets/gemini-banner-7.png" alt="Dashboard do Cosmo Finanças"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-1.png" alt="Transações"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-2.png" alt="Categorias"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-3.png" alt="Investimentos"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-4.png" alt="Relatórios"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-5.png" alt="Importação CSV"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-6.png" alt="Contas a Pagar"></div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Anterior">&#8249;</button>
+            <button class="carousel-btn next" aria-label="Próximo">&#8250;</button>
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── STATS ─────────────────────────────────────────────────────── -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Dados no seu Mac</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">+15</div>
+                <div class="stat-label">Recursos poderosos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">14</div>
+                <div class="stat-label">Dias grátis (Premium)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">R$&thinsp;6,90</div>
+                <div class="stat-label">A partir de / mês</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── FEATURES GRID ─────────────────────────────────────────────── -->
+<section class="features" id="features">
+    <div class="container">
+        <span class="section-label reveal">Tudo em um lugar</span>
+        <h2 class="section-title reveal">Tudo que você precisa</h2>
+        <p class="section-sub reveal">Comece de graça com os recursos essenciais. Desbloqueie o potencial completo com o Premium.</p>
+        <div class="features-grid">
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">📊</div>
+                <h3>Dashboard</h3>
+                <p>Visão geral das suas finanças em tempo real. Gráficos de receitas, despesas e saldo com alertas inteligentes.</p>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">💳</div>
+                <h3>Transações</h3>
+                <p>Registre receitas e despesas com facilidade. Suporte a parcelas, transações recorrentes e transferências entre contas.</p>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">🏦</div>
+                <h3>Contas Bancárias</h3>
+                <p>Gerencie contas correntes, poupanças e cartões de crédito. Controle de faturas, fechamento e saldos a confirmar.</p>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">📂</div>
+                <h3>Categorias</h3>
+                <p>Organize gastos com categorias e subcategorias personalizadas. Saiba exatamente para onde vai o seu dinheiro.</p>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">👥</div>
+                <h3>Multi-Pessoa</h3>
+                <p>Acompanhe gastos por pessoa. Ideal para casais ou famílias que compartilham as finanças.</p>
+            </div>
+
+            <div class="feat-card feat-new reveal">
+                <div class="feat-icon">📅</div>
+                <h3>Contas a Pagar</h3>
+                <p>Cadastre contas fixas mensais (aluguel, internet, luz) e receba notificações antes do vencimento. Nunca mais esqueça uma conta.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+            <div class="feat-card feat-new reveal">
+                <div class="feat-icon">🎯</div>
+                <h3>Orçamentos</h3>
+                <p>Defina limites de gastos por categoria e acompanhe o progresso mês a mês. Controle real sobre cada centavo.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">📈</div>
+                <h3>Investimentos</h3>
+                <p>Carteira de Ações, FIIs e Renda Fixa com aportes, dividendos e histórico de rendimentos.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">📋</div>
+                <h3>Relatórios</h3>
+                <p>Gráficos detalhados de receitas, despesas e evolução patrimonial. Entenda seus hábitos financeiros com clareza.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">🤖</div>
+                <h3>IA · Categorização Automática</h3>
+                <p>Inteligência artificial que aprende seus hábitos e categoriza novas transações automaticamente — sem configuração.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">📥</div>
+                <h3>Importar CSV</h3>
+                <p>Importe extratos de qualquer banco em CSV. Mapeamento inteligente de colunas e categorização automática em lote.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+            <div class="feat-card reveal">
+                <div class="feat-icon">☁️</div>
+                <h3>Sincronização iCloud</h3>
+                <p>Seus dados sincronizados de forma segura e automática via iCloud. Sempre atualizados em todos os seus dispositivos Apple.</p>
+                <span class="feat-tag">✦ Premium</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── SPOTLIGHT 1 · Contas a Pagar ─────────────────────────────── -->
+<section class="spotlight" style="background: var(--bg-light);">
+    <div class="container">
+        <div class="spotlight-inner">
+            <div class="spotlight-text reveal">
+                <span class="badge badge-gold">✦ Novo · Premium</span>
+                <h2>Nunca mais esqueça uma conta a pagar</h2>
+                <p>Cadastre todas as suas contas fixas mensais uma única vez. O app gera automaticamente cada parcela mensal e te avisa antes do vencimento.</p>
+                <ul class="spotlight-list">
+                    <li>Aluguel, internet, streaming, assinaturas e muito mais</li>
+                    <li>Notificações automáticas no prazo que você escolher</li>
+                    <li>Marque como paga com um clique — lança a transação automaticamente</li>
+                    <li>Alerta visual no dashboard para contas vencidas</li>
+                    <li>Defina data de início e fim para contas temporárias</li>
+                </ul>
+            </div>
+            <div class="spotlight-visual reveal">
+                <div class="spotlight-mockup">
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">Contas do mês · Fevereiro</div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot red"></div>
+                        <span class="mockup-label">Aluguel</span>
+                        <span style="font-size:0.75rem; color:#f87171; margin-right:8px;">Vencida</span>
+                        <span class="mockup-val neg">R$ 1.800</span>
+                    </div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot yellow"></div>
+                        <span class="mockup-label">Energia</span>
+                        <span style="font-size:0.75rem; color:#fbbf24; margin-right:8px;">Vence hoje</span>
+                        <span class="mockup-val" style="color:#fbbf24;">R$ 230</span>
+                    </div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot blue"></div>
+                        <span class="mockup-label">Internet</span>
+                        <span style="font-size:0.75rem; color:rgba(255,255,255,0.4); margin-right:8px;">28/02</span>
+                        <span class="mockup-val">R$ 120</span>
+                    </div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot green"></div>
+                        <span class="mockup-label">Netflix</span>
+                        <span style="font-size:0.75rem; color:#4ade80; margin-right:8px;">Paga ✓</span>
+                        <span class="mockup-val pos">R$ 45</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SPOTLIGHT 2 · Orçamentos ─────────────────────────────────── -->
+<section class="spotlight">
+    <div class="container">
+        <div class="spotlight-inner reverse">
+            <div class="spotlight-text reveal">
+                <span class="badge badge-gold">✦ Novo · Premium</span>
+                <h2>Orçamentos que funcionam de verdade</h2>
+                <p>Defina um limite de gastos para cada categoria e acompanhe em tempo real quanto já gastou. O controle que você sempre quis, sem planilhas.</p>
+                <ul class="spotlight-list">
+                    <li>Limite por categoria: alimentação, lazer, transporte e mais</li>
+                    <li>Barra de progresso colorida com alerta ao se aproximar do limite</li>
+                    <li>Navegação mês a mês para comparar períodos</li>
+                    <li>Calculado automaticamente a partir das suas transações</li>
+                </ul>
+            </div>
+            <div class="spotlight-visual reveal">
+                <div class="spotlight-mockup">
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">Orçamentos · Fevereiro</div>
+                    <div class="mockup-row" style="flex-direction:column; align-items:flex-start; gap:6px;">
+                        <div style="display:flex; width:100%; justify-content:space-between;">
+                            <span class="mockup-label">🍔 Alimentação</span>
+                            <span class="mockup-val">R$ 820 <span style="color:rgba(255,255,255,0.4);">/ 1.000</span></span>
+                        </div>
+                        <div class="mockup-bar-wrap" style="width:100%;">
+                            <div class="mockup-bar-fill" style="width:82%; background: linear-gradient(90deg,#fbbf24,#f97316);"></div>
+                        </div>
+                    </div>
+                    <div class="mockup-row" style="flex-direction:column; align-items:flex-start; gap:6px;">
+                        <div style="display:flex; width:100%; justify-content:space-between;">
+                            <span class="mockup-label">🚗 Transporte</span>
+                            <span class="mockup-val pos">R$ 340 <span style="color:rgba(255,255,255,0.4);">/ 600</span></span>
+                        </div>
+                        <div class="mockup-bar-wrap" style="width:100%;">
+                            <div class="mockup-bar-fill" style="width:57%; background: linear-gradient(90deg,#4ade80,#22d3ee);"></div>
+                        </div>
+                    </div>
+                    <div class="mockup-row" style="flex-direction:column; align-items:flex-start; gap:6px;">
+                        <div style="display:flex; width:100%; justify-content:space-between;">
+                            <span class="mockup-label">🎮 Lazer</span>
+                            <span class="mockup-val neg">R$ 510 <span style="color:rgba(255,255,255,0.4);">/ 400</span></span>
+                        </div>
+                        <div class="mockup-bar-wrap" style="width:100%;">
+                            <div class="mockup-bar-fill" style="width:100%; background: linear-gradient(90deg,#f87171,#e11d48);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SPOTLIGHT 3 · IA + CSV ───────────────────────────────────── -->
+<section class="spotlight" style="background: var(--bg-light);">
+    <div class="container">
+        <div class="spotlight-inner">
+            <div class="spotlight-text reveal">
+                <span class="badge badge-green">✦ Premium</span>
+                <h2>Importe extratos e deixe a IA trabalhar por você</h2>
+                <p>Baixe o extrato do seu banco em CSV e importe com poucos cliques. Nossa IA aprende seus hábitos e categoriza tudo automaticamente.</p>
+                <ul class="spotlight-list">
+                    <li>Compatível com extratos de qualquer banco brasileiro</li>
+                    <li>Mapeamento inteligente de colunas (data, descrição, valor)</li>
+                    <li>Categorização em lote com memória de estabelecimentos</li>
+                    <li>Revisão linha a linha antes de confirmar a importação</li>
+                    <li>Machine learning local — seus dados nunca saem do Mac</li>
+                </ul>
+            </div>
+            <div class="spotlight-visual reveal">
+                <div class="spotlight-mockup">
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">Importando 48 transações</div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot green"></div>
+                        <span class="mockup-label">Supermercado BH</span>
+                        <span style="font-size:0.78rem; color:rgba(255,255,255,0.4);">🤖 Auto</span>
+                        <span class="mockup-val neg">R$ 327</span>
+                    </div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot green"></div>
+                        <span class="mockup-label">Uber</span>
+                        <span style="font-size:0.78rem; color:rgba(255,255,255,0.4);">🤖 Auto</span>
+                        <span class="mockup-val neg">R$ 45</span>
+                    </div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot yellow"></div>
+                        <span class="mockup-label">PGTO PIX 12312</span>
+                        <span style="font-size:0.78rem; color:#fbbf24;">❓ Revisar</span>
+                        <span class="mockup-val neg">R$ 150</span>
+                    </div>
+                    <div class="mockup-row">
+                        <div class="mockup-dot green"></div>
+                        <span class="mockup-label">Netflix</span>
+                        <span style="font-size:0.78rem; color:rgba(255,255,255,0.4);">🤖 Auto</span>
+                        <span class="mockup-val neg">R$ 45</span>
+                    </div>
+                    <div style="margin-top:14px; background:rgba(255,255,255,0.08); border-radius:8px; padding:10px 12px; display:flex; justify-content:space-between;">
+                        <span style="color:rgba(255,255,255,0.6); font-size:0.83rem;">44 prontas · 4 para revisar</span>
+                        <span style="color:#4ade80; font-size:0.83rem; font-weight:700;">91% automático</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── COMPARISON TABLE ──────────────────────────────────────────── -->
+<section class="comparison" id="compare">
+    <div class="container">
+        <span class="section-label reveal">Transparência total</span>
+        <h2 class="section-title reveal">Gratuito vs Premium</h2>
+        <p class="section-sub reveal">Comece de graça e faça upgrade quando quiser mais poder.</p>
+        <div class="comp-wrap reveal">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Gratuito</th>
+                        <th>Premium ✨</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="comp-section-header"><td colspan="3">Básico</td></tr>
+                    <tr><td>Dashboard</td><td class="ck">✓</td><td class="ck">✓</td></tr>
+                    <tr><td>Transações (ilimitadas)</td><td class="ck">✓</td><td class="ck">✓</td></tr>
+                    <tr><td>Categorias padrão</td><td class="ck">✓</td><td class="ck">✓</td></tr>
+                    <tr><td>Criar novas categorias</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Contas bancárias</td><td class="lim">Máx. 2</td><td class="ck">Ilimitadas</td></tr>
+                    <tr><td>Cartões de crédito</td><td class="lim">Máx. 2</td><td class="ck">Ilimitados</td></tr>
+                    <tr><td>Subcategorias</td><td class="lim">Máx. 2</td><td class="ck">Ilimitadas</td></tr>
+
+                    <tr class="comp-section-header"><td colspan="3">Controle Avançado</td></tr>
+                    <tr class="new-row"><td>Contas a Pagar + Notificações</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr class="new-row"><td>Orçamentos por Categoria</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Cartão de Benefícios (VR/VA/VT)</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Multi-Pessoa</td><td class="ck">✓</td><td class="ck">✓</td></tr>
+
+                    <tr class="comp-section-header"><td colspan="3">Investimentos & Relatórios</td></tr>
+                    <tr><td>Investimentos (Ações, FIIs, RF)</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Aportes e Dividendos</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Relatórios e Gráficos</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Auditoria Financeira</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+
+                    <tr class="comp-section-header"><td colspan="3">Dados & Sincronização</td></tr>
+                    <tr><td>IA Categorização Automática</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Importar CSV (extratos bancários)</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Export/Import de backup</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Sincronização iCloud</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PREMIUM SECTION ───────────────────────────────────────────── -->
+<section class="premium" id="premium">
+    <div class="container">
+        <div class="premium-inner">
+            <div class="premium-text reveal">
+                <span class="section-label" style="text-align:left; color:#4ade80;">👑 Premium</span>
+                <h2>Leve suas finanças ao próximo nível</h2>
+                <p>Recursos avançados para quem leva o controle financeiro a sério. Sem mensalidade cara, sem pegadinhas.</p>
+                <ul class="prem-list">
+                    <li class="highlight"><span class="check-icon">✓</span> Contas a Pagar com notificações automáticas</li>
+                    <li class="highlight"><span class="check-icon">✓</span> Orçamentos por categoria mês a mês</li>
+                    <li><span class="check-icon">✓</span> Investimentos: Ações, FIIs e Renda Fixa</li>
+                    <li><span class="check-icon">✓</span> Relatórios e gráficos detalhados</li>
+                    <li><span class="check-icon">✓</span> IA que categoriza automaticamente</li>
+                    <li><span class="check-icon">✓</span> Importar extratos CSV de qualquer banco</li>
+                    <li><span class="check-icon">✓</span> Export/Import para backup</li>
+                    <li><span class="check-icon">✓</span> Contas, cartões e categorias ilimitados</li>
+                    <li><span class="check-icon">✓</span> Cartão de Benefícios (VR, VA, VT)</li>
+                    <li><span class="check-icon">✓</span> Sincronização iCloud entre dispositivos</li>
+                    <li><span class="check-icon">✓</span> Auditoria financeira para encontrar erros</li>
+                </ul>
+                <a href="#pricing" class="btn btn-grad">Ver preços →</a>
+            </div>
+            <div class="premium-visual reveal">
+                <div class="premium-app-card">
+                    <img src="assets/cosmo-financas-appstore.png" alt="Cosmo Finanças">
+                    <p style="color:white; font-weight:700; font-size:1.1rem; margin-bottom:6px;">Cosmo Finanças</p>
+                    <p class="premium-price-hint">A partir de R$&thinsp;6,90/mês · 14 dias grátis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRICING ───────────────────────────────────────────────────── -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <span class="section-label reveal">Simples e acessível</span>
+        <h2 class="section-title reveal">Escolha seu plano</h2>
+        <p class="section-sub reveal">14 dias grátis em qualquer plano. Cancele quando quiser, sem burocracia.</p>
+        <div class="pricing-grid reveal">
+            <div class="price-card">
+                <h3>Mensal</h3>
+                <div class="price-amount"><sup>R$</sup>6<span style="font-size:2rem;">,90</span> <span>/mês</span></div>
+                <div class="price-detail">14 dias grátis · Cobrado mensalmente</div>
+                <ul class="price-features">
+                    <li>Todos os recursos Premium</li>
+                    <li>Contas a Pagar + Notificações</li>
+                    <li>Orçamentos por categoria</li>
+                    <li>Investimentos completos</li>
+                    <li>Sincronização iCloud</li>
+                </ul>
+                <a href="#" class="price-btn price-btn-outline">Começar grátis</a>
+            </div>
+            <div class="price-card featured">
+                <div class="price-badge">Melhor valor — 2 meses grátis</div>
+                <h3>Anual</h3>
+                <div class="price-amount"><sup>R$</sup>69<span style="font-size:2rem;">,90</span> <span>/ano</span></div>
+                <div class="price-detail">14 dias grátis · Equivale a R$&thinsp;5,83/mês</div>
+                <ul class="price-features">
+                    <li>Todos os recursos Premium</li>
+                    <li>Contas a Pagar + Notificações</li>
+                    <li>Orçamentos por categoria</li>
+                    <li>Investimentos completos</li>
+                    <li>Sincronização iCloud</li>
+                </ul>
+                <a href="#" class="price-btn price-btn-grad">Começar grátis</a>
+            </div>
+        </div>
+        <p class="pricing-note">Cancele a qualquer momento · Renovação automática via Apple · <a href="terms.html" style="color:var(--green);">Termos</a></p>
+    </div>
+</section>
+
+<!-- ─── FAQ ───────────────────────────────────────────────────────── -->
+<section class="faq" id="faq">
+    <div class="container">
+        <span class="section-label reveal">Dúvidas frequentes</span>
+        <h2 class="section-title reveal">Perguntas frequentes</h2>
+        <p class="section-sub reveal">Tem alguma dúvida que não está aqui? <a href="mailto:matheus.jk.weber@gmail.com" style="color:var(--green);">Entre em contato.</a></p>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <div class="faq-question">
+                    Meus dados ficam no meu Mac ou vão para algum servidor?
+                    <span class="faq-chevron">▾</span>
+                </div>
+                <div class="faq-answer">
+                    Todos os seus dados ficam armazenados localmente no seu Mac, usando SwiftData nativo da Apple. A sincronização iCloud (Premium) usa sua própria conta Apple, com criptografia de ponta a ponta. Nenhum dado é enviado para nossos servidores.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    O app funciona sem internet?
+                    <span class="faq-chevron">▾</span>
+                </div>
+                <div class="faq-answer">
+                    Sim! O Cosmo Finanças funciona 100% offline. A internet é usada apenas para sincronizar com iCloud (quando habilitado no plano Premium) e não é necessária para nenhuma outra funcionalidade.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Posso importar extratos do Nubank, Itaú, Bradesco e outros?
+                    <span class="faq-chevron">▾</span>
+                </div>
+                <div class="faq-answer">
+                    Sim. A importação aceita qualquer arquivo CSV. O app tem um mapeador inteligente de colunas que identifica automaticamente as colunas de data, descrição e valor. Compatível com extratos de praticamente qualquer banco brasileiro que ofereça exportação em CSV ou OFX convertido para CSV.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Como funcionam as notificações de Contas a Pagar?
+                    <span class="faq-chevron">▾</span>
+                </div>
+                <div class="faq-answer">
+                    Você cadastra as contas fixas (aluguel, internet, assinaturas, etc.) com o dia de vencimento. O app agenda notificações automáticas no macOS para te lembrar antes de cada vencimento. Ao marcar como paga, uma transação é lançada automaticamente na conta bancária que você escolher.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Como cancelo a assinatura?
+                    <span class="faq-chevron">▾</span>
+                </div>
+                <div class="faq-answer">
+                    O cancelamento é feito diretamente nas configurações da sua conta Apple (Ajustes → Apple ID → Assinaturas). Você mantém acesso Premium até o fim do período pago. Não há cobrança de multa ou taxa de cancelamento.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    O que acontece com meus dados se eu cancelar?
+                    <span class="faq-chevron">▾</span>
+                </div>
+                <div class="faq-answer">
+                    Seus dados ficam no seu Mac para sempre. Ao cancelar o Premium, o app passa a funcionar no modo gratuito — você pode visualizar todos os dados históricos, mas as funcionalidades Premium ficam bloqueadas para edição. Recomendamos usar a função Export antes de cancelar para ter um backup completo.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA BAND ───────────────────────────────────────────────────── -->
+<section class="cta-band">
+    <div class="container">
+        <h2>Comece a controlar suas finanças hoje</h2>
+        <p>Grátis para começar. Sem cartão de crédito. Sem complicação. Apenas você e o controle total do seu dinheiro.</p>
+        <a href="#" class="btn btn-white">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Baixar na Mac App Store
+        </a>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="/" class="nav-logo">
+                    <div class="nav-logo-icon"><img src="assets/cosmo-financas-logo.png" alt="Cosmo Finanças"></div>
                     Cosmo Finanças
                 </a>
-                <div class="nav-links">
-                    <a href="#features">Recursos</a>
-                    <a href="#compare">Comparar</a>
-                    <a href="#premium">Premium</a>
-                    <a href="#pricing">Preços</a>
-                </div>
-            </nav>
-        </div>
-    </header>
-    
-    <section class="hero">
-        <div class="container">
-            <h1>Controle financeiro <span>inteligente</span> para Mac</h1>
-            <p class="subtitle">Gerencie suas finanças pessoais com praticidade. Transações, contas, cartões de crédito, investimentos e relatórios — tudo em um app nativo para macOS.</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                    Baixar na Mac App Store
-                </a>
-                <a href="#features" class="btn btn-secondary">
-                    Conheça os recursos
-                </a>
+                <p>Controle financeiro nativo para macOS. Simples, privado e poderoso. Seus dados sempre no seu dispositivo.</p>
             </div>
-            <div class="hero-badges">
-                <div class="hero-badge">🍎 Nativo para macOS</div>
-                <div class="hero-badge">☁️ Sincronização iCloud</div>
-                <div class="hero-badge">🤖 IA para categorização</div>
+            <div class="footer-col">
+                <h4>Recursos</h4>
+                <a href="#features">Dashboard</a>
+                <a href="#features">Contas a Pagar</a>
+                <a href="#features">Orçamentos</a>
+                <a href="#features">Investimentos</a>
+                <a href="#features">Importar CSV</a>
+                <a href="#features">iCloud Sync</a>
             </div>
-            <div class="hero-carousel" id="heroCarousel" aria-label="Banners promocionais">
-                <div class="hero-carousel-track">
-                    <div class="hero-carousel-slide is-active">
-                        <img src="assets/gemini-banner-7.png" alt="Banner promocional 1 do Cosmo Finanças">
-                    </div>
-                    <div class="hero-carousel-slide">
-                        <img src="assets/gemini-banner-1.png" alt="Banner promocional 2 do Cosmo Finanças">
-                    </div>
-                    <div class="hero-carousel-slide">
-                        <img src="assets/gemini-banner-2.png" alt="Banner promocional 3 do Cosmo Finanças">
-                    </div>
-                    <div class="hero-carousel-slide">
-                        <img src="assets/gemini-banner-3.png" alt="Banner promocional 4 do Cosmo Finanças">
-                    </div>
-                    <div class="hero-carousel-slide">
-                        <img src="assets/gemini-banner-4.png" alt="Banner promocional 5 do Cosmo Finanças">
-                    </div>
-                    <div class="hero-carousel-slide">
-                        <img src="assets/gemini-banner-5.png" alt="Banner promocional 6 do Cosmo Finanças">
-                    </div>
-                    <div class="hero-carousel-slide">
-                        <img src="assets/gemini-banner-6.png" alt="Banner promocional 7 do Cosmo Finanças">
-                    </div>
-                </div>
-                <button class="hero-carousel-control prev" type="button" aria-label="Banner anterior">&#8249;</button>
-                <button class="hero-carousel-control next" type="button" aria-label="Próximo banner">&#8250;</button>
-                <div class="hero-carousel-dots"></div>
-            </div>
-            <p class="hero-carousel-note">Carrossel de banners promocionais.</p>
-        </div>
-    </section>
-    
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Tudo que você precisa</h2>
-            <p class="section-subtitle">Comece gratuitamente com os recursos essenciais para organizar sua vida financeira.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Dashboard</h3>
-                    <p>Visão geral das suas finanças com gráficos e resumos. Veja receitas, despesas e saldo em tempo real.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💳</div>
-                    <h3>Transações</h3>
-                    <p>Registre receitas e despesas facilmente. Suporte a parcelas, recorrências e transferências entre contas.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏦</div>
-                    <h3>Contas Bancárias</h3>
-                    <p>Gerencie suas contas correntes e cartões de crédito com controle de faturas e fechamento.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📂</div>
-                    <h3>Categorias</h3>
-                    <p>Organize gastos por categorias e subcategorias personalizadas. Saiba exatamente para onde vai seu dinheiro.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Multi-Pessoa</h3>
-                    <p>Acompanhe gastos por pessoa. Ideal para casais ou famílias que compartilham finanças.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Recorrências</h3>
-                    <p>Cadastre despesas recorrentes e o app gera as transações automaticamente todo mês.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">☁️</div>
-                    <h3>Sincronização iCloud</h3>
-                    <p>Sincronize seus dados entre dispositivos automaticamente via iCloud. Seus dados sempre atualizados. <span style="color:#0f9b58; font-weight:600;">Premium</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="comparison" id="compare">
-        <div class="container">
-            <h2 class="section-title">Gratuito vs Premium</h2>
-            <p class="section-subtitle">Comece de graça e faça upgrade quando precisar de mais poder.</p>
-            <div class="comparison-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Recurso</th>
-                            <th>Gratuito</th>
-                            <th>Premium ✨</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dashboard</td>
-                            <td class="check">✓</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Transações</td>
-                            <td class="check">✓</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Categorias existentes</td>
-                            <td class="check">✓</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Criar novas categorias</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Subcategorias por categoria</td>
-                            <td class="limit">Máx. 2</td>
-                            <td class="check">Ilimitadas</td>
-                        </tr>
-                        <tr>
-                            <td>Contas bancárias</td>
-                            <td class="limit">Máx. 2</td>
-                            <td class="check">Ilimitadas</td>
-                        </tr>
-                        <tr>
-                            <td>Cartões de crédito</td>
-                            <td class="limit">Máx. 2</td>
-                            <td class="check">Ilimitados</td>
-                        </tr>
-                        <tr>
-                            <td>Cartão de Benefícios (VR/VA)</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Investimentos (Ações, FIIs, RF)</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Relatórios e Gráficos</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Auditoria Financeira</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Importar/Exportar dados</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Importar CSV (extratos)</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>IA Categorização automática</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                        <tr>
-                            <td>Sincronização iCloud</td>
-                            <td class="cross">✗</td>
-                            <td class="check">✓</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-    
-    <section class="pro-section" id="premium">
-        <div class="container">
-            <div class="pro-content">
-                <div class="pro-text">
-                    <span class="pro-badge">👑 Premium</span>
-                    <h2>Desbloqueie todo o potencial</h2>
-                    <p>Leve o controle financeiro ao próximo nível com recursos avançados para quem leva suas finanças a sério.</p>
-                    <ul class="pro-features">
-                        <li>Investimentos: Ações, FIIs, Renda Fixa com aportes e dividendos</li>
-                        <li>Relatórios detalhados de gastos e receitas</li>
-                        <li>Auditoria para encontrar inconsistências</li>
-                        <li>IA que categoriza transações automaticamente</li>
-                        <li>Importar extratos CSV de qualquer banco</li>
-                        <li>Export/import de dados para backup</li>
-                        <li>Contas, cartões e categorias ilimitados</li>
-                        <li>Cartão de Benefícios (VR, VA, VT)</li>
-                        <li>Sincronização via iCloud entre dispositivos</li>
-                    </ul>
-                </div>
-                <div class="pro-visual" style="text-align: center;">
-                    <div style="background: linear-gradient(135deg, #0f9b58 0%, #0b7dda 100%); border-radius: 24px; padding: 20px;">
-                        <img src="assets/cosmo-financas-appstore.png" alt="Ícone do Cosmo Finanças" style="width: 260px; border-radius: 18px; box-shadow: 0 14px 40px rgba(0,0,0,0.25);">
-                    </div>
-                    <p style="margin-top: 24px; font-size: 1.2rem; opacity: 0.8;">Sua vida financeira sob controle total</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2 class="section-title">Escolha seu plano</h2>
-            <p class="section-subtitle">Preços acessíveis para quem quer controle financeiro de verdade.</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Mensal</h3>
-                    <div class="price">R$ 6,90 <span>/mês</span></div>
-                    <div class="price-detail">14 dias grátis · Cobrado mensalmente</div>
-                    <a href="#" class="btn btn-secondary" style="color: #0b7dda; border-color: #0b7dda;">
-                        Assinar Mensal
-                    </a>
-                </div>
-                <div class="pricing-card featured">
-                    <h3>Anual</h3>
-                    <div class="price">R$ 69,90 <span>/ano</span></div>
-                    <div class="price-detail">14 dias grátis · Pague 10 meses e use 12</div>
-                    <a href="#" class="btn btn-primary">
-                        Assinar Anual
-                    </a>
-                </div>
-            </div>
-            <p style="text-align: center; margin-top: 24px; color: #999; font-size: 0.9rem;">
-                Cancele a qualquer momento · Renovação automática · Termos da Apple
-            </p>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="container">
-            <div class="footer-links">
+            <div class="footer-col">
+                <h4>Legal</h4>
                 <a href="privacy.html">Política de Privacidade</a>
                 <a href="terms.html">Termos de Uso</a>
                 <a href="mailto:matheus.jk.weber@gmail.com">Contato</a>
                 <a href="#">Mac App Store</a>
             </div>
-            <p class="copyright">&copy; 2026 Cosmo Finanças. Todos os direitos reservados.</p>
         </div>
-    </footer>
-    <script>
-        (function () {
-            const carousel = document.getElementById('heroCarousel');
-            if (!carousel) return;
+        <div class="footer-bottom">
+            &copy; 2026 Cosmo Finanças · Desenvolvido com ❤️ no Brasil ·
+            <a href="privacy.html">Privacidade</a> · <a href="terms.html">Termos</a>
+        </div>
+    </div>
+</footer>
 
-            const slides = Array.from(carousel.querySelectorAll('.hero-carousel-slide'));
-            const dotsContainer = carousel.querySelector('.hero-carousel-dots');
-            const prevButton = carousel.querySelector('.hero-carousel-control.prev');
-            const nextButton = carousel.querySelector('.hero-carousel-control.next');
-            const intervalMs = 4500;
-            let current = 0;
-            let timer = null;
-            let dots = [];
+<script>
+// ─── Sticky Nav ───────────────────────────────────────────────────
+(function () {
+    var nav = document.getElementById('nav');
+    function onScroll() {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
 
-            function buildDots() {
-                dotsContainer.innerHTML = '';
-                dots = slides.map((_, index) => {
-                    const dot = document.createElement('button');
-                    dot.className = 'hero-carousel-dot';
-                    dot.type = 'button';
-                    dot.setAttribute('aria-label', `Ir para banner ${index + 1}`);
-                    dotsContainer.appendChild(dot);
-                    return dot;
-                });
+// ─── Carousel ─────────────────────────────────────────────────────
+(function () {
+    var carousel = document.getElementById('heroCarousel');
+    if (!carousel) return;
+    var slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+    var dotsWrap = carousel.querySelector('.carousel-dots');
+    var prev = carousel.querySelector('.carousel-btn.prev');
+    var next = carousel.querySelector('.carousel-btn.next');
+    var intervalMs = 4500;
+    var current = 0;
+    var timer = null;
+    var dots = [];
+
+    function buildDots() {
+        dotsWrap.innerHTML = '';
+        dots = slides.map(function (_, i) {
+            var d = document.createElement('button');
+            d.className = 'carousel-dot';
+            d.type = 'button';
+            d.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dotsWrap.appendChild(d);
+            return d;
+        });
+    }
+
+    function show(idx) {
+        current = idx;
+        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === idx); });
+        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+    }
+
+    function goNext() { show((current + 1) % slides.length); }
+    function goPrev() { show((current - 1 + slides.length) % slides.length); }
+    function start() { stop(); timer = setInterval(goNext, intervalMs); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    next.addEventListener('click', function () { goNext(); start(); });
+    prev.addEventListener('click', function () { goPrev(); start(); });
+    buildDots();
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { show(i); start(); }); });
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    show(0);
+    start();
+})();
+
+// ─── Reveal on scroll ─────────────────────────────────────────────
+(function () {
+    var els = Array.from(document.querySelectorAll('.reveal'));
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
             }
+        });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { observer.observe(el); });
+})();
 
-            function render(index) {
-                current = index;
-                slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
-                dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
-            }
-
-            function next() {
-                render((current + 1) % slides.length);
-            }
-
-            function previous() {
-                render((current - 1 + slides.length) % slides.length);
-            }
-
-            function start() {
-                stop();
-                timer = setInterval(next, intervalMs);
-            }
-
-            function stop() {
-                if (timer) {
-                    clearInterval(timer);
-                    timer = null;
-                }
-            }
-
-            nextButton.addEventListener('click', function () {
-                next();
-                start();
-            });
-
-            prevButton.addEventListener('click', function () {
-                previous();
-                start();
-            });
-
-            buildDots();
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', function () {
-                    render(index);
-                    start();
-                });
-            });
-
-            carousel.addEventListener('mouseenter', stop);
-            carousel.addEventListener('mouseleave', start);
-            render(0);
-            start();
-        })();
-    </script>
+// ─── FAQ Accordion ────────────────────────────────────────────────
+(function () {
+    var items = Array.from(document.querySelectorAll('.faq-item'));
+    items.forEach(function (item) {
+        var q = item.querySelector('.faq-question');
+        q.addEventListener('click', function () {
+            var isOpen = item.classList.contains('open');
+            items.forEach(function (i) { i.classList.remove('open'); });
+            if (!isOpen) item.classList.add('open');
+        });
+    });
+})();
+</script>
 </body>
 </html>
