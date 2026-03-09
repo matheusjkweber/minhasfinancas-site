@@ -532,6 +532,16 @@
         .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
         .footer-bottom a:hover { color: white; }
 
+        /* ─── Social Proof ────────────────────────────────────── */
+        .social-proof {
+            text-align: center; padding: 20px 0 0;
+        }
+        .social-proof-inner {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 0.88rem; color: var(--text-muted);
+        }
+        .social-proof-inner svg { flex-shrink: 0; }
+
         /* ─── Responsive ───────────────────────────────────────── */
         @media (max-width: 900px) {
             .spotlight-inner, .premium-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -601,7 +611,7 @@
                 <div class="carousel-slide"><img src="assets/gemini-banner-2.png" alt="Categorias"></div>
                 <div class="carousel-slide"><img src="assets/gemini-banner-3.png" alt="Investimentos"></div>
                 <div class="carousel-slide"><img src="assets/gemini-banner-4.png" alt="Relatórios"></div>
-                <div class="carousel-slide"><img src="assets/gemini-banner-5.png" alt="Importação CSV"></div>
+                <div class="carousel-slide"><img src="assets/gemini-banner-5.png" alt="Importar Extrato"></div>
                 <div class="carousel-slide"><img src="assets/gemini-banner-6.png" alt="Contas a Pagar"></div>
             </div>
             <button class="carousel-btn prev" aria-label="Anterior">&#8249;</button>
@@ -635,6 +645,16 @@
     </div>
 </div>
 
+<!-- ─── SOCIAL PROOF ──────────────────────────────────────────────── -->
+<div class="social-proof">
+    <div class="container">
+        <div class="social-proof-inner">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--text-muted)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Disponível gratuitamente na Mac App Store · macOS 14+
+        </div>
+    </div>
+</div>
+
 <!-- ─── FEATURES GRID ─────────────────────────────────────────────── -->
 <section class="features" id="features">
     <div class="container">
@@ -646,7 +666,7 @@
             <div class="feat-card reveal">
                 <div class="feat-icon">📊</div>
                 <h3>Dashboard</h3>
-                <p>Visão geral das suas finanças em tempo real. Gráficos de receitas, despesas e saldo com alertas inteligentes.</p>
+                <p>Abra o app e veja em segundos quanto sobrou no mês, o que vence esta semana e se está dentro do orçamento — tudo num painel que atualiza sozinho.</p>
             </div>
 
             <div class="feat-card reveal">
@@ -673,14 +693,14 @@
                 <p>Acompanhe gastos por pessoa. Ideal para casais ou famílias que compartilham as finanças.</p>
             </div>
 
-            <div class="feat-card feat-new reveal">
+            <div class="feat-card reveal">
                 <div class="feat-icon">📅</div>
                 <h3>Contas a Pagar</h3>
                 <p>Cadastre contas fixas mensais (aluguel, internet, luz) e receba notificações antes do vencimento. Nunca mais esqueça uma conta.</p>
                 <span class="feat-tag">✦ Premium</span>
             </div>
 
-            <div class="feat-card feat-new reveal">
+            <div class="feat-card reveal">
                 <div class="feat-icon">🎯</div>
                 <h3>Orçamentos</h3>
                 <p>Defina limites de gastos por categoria e acompanhe o progresso mês a mês. Controle real sobre cada centavo.</p>
@@ -697,21 +717,21 @@
             <div class="feat-card reveal">
                 <div class="feat-icon">📋</div>
                 <h3>Relatórios</h3>
-                <p>Gráficos detalhados de receitas, despesas e evolução patrimonial. Entenda seus hábitos financeiros com clareza.</p>
+                <p>Descubra que você gasta R$&thinsp;340/mês em assinaturas que esqueceu. Veja seus hábitos reais, por categoria, mês a mês.</p>
                 <span class="feat-tag">✦ Premium</span>
             </div>
 
             <div class="feat-card reveal">
                 <div class="feat-icon">🤖</div>
-                <h3>IA · Categorização Automática</h3>
-                <p>Inteligência artificial que aprende seus hábitos e categoriza novas transações automaticamente — sem configuração.</p>
+                <h3>Categorização Inteligente</h3>
+                <p>Na primeira importação, você categoriza. Na segunda, a IA já sabe: Uber é Transporte, iFood é Alimentação. Fica mais inteligente com o tempo.</p>
                 <span class="feat-tag">✦ Premium</span>
             </div>
 
             <div class="feat-card reveal">
                 <div class="feat-icon">📥</div>
-                <h3>Importar CSV</h3>
-                <p>Importe extratos de qualquer banco em CSV. Mapeamento inteligente de colunas e categorização automática em lote.</p>
+                <h3>Importar Extrato</h3>
+                <p>Importe extratos e faturas de qualquer banco com poucos cliques. Organização automática e categorização inteligente.</p>
                 <span class="feat-tag">✦ Premium</span>
             </div>
 
@@ -731,7 +751,7 @@
     <div class="container">
         <div class="spotlight-inner">
             <div class="spotlight-text reveal">
-                <span class="badge badge-gold">✦ Novo · Premium</span>
+                <span class="badge badge-green">✦ Premium</span>
                 <h2>Nunca mais esqueça uma conta a pagar</h2>
                 <p>Cadastre todas as suas contas fixas mensais uma única vez. O app gera automaticamente cada parcela mensal e te avisa antes do vencimento.</p>
                 <ul class="spotlight-list">
@@ -780,7 +800,7 @@
     <div class="container">
         <div class="spotlight-inner reverse">
             <div class="spotlight-text reveal">
-                <span class="badge badge-gold">✦ Novo · Premium</span>
+                <span class="badge badge-green">✦ Premium</span>
                 <h2>Orçamentos que funcionam de verdade</h2>
                 <p>Defina um limite de gastos para cada categoria e acompanhe em tempo real quanto já gastou. O controle que você sempre quis, sem planilhas.</p>
                 <ul class="spotlight-list">
@@ -826,25 +846,25 @@
     </div>
 </section>
 
-<!-- ─── SPOTLIGHT 3 · IA + CSV ───────────────────────────────────── -->
+<!-- ─── SPOTLIGHT 3 · IA + Importação ──────────────────────────────── -->
 <section class="spotlight" style="background: var(--bg-light);">
     <div class="container">
         <div class="spotlight-inner">
             <div class="spotlight-text reveal">
                 <span class="badge badge-green">✦ Premium</span>
-                <h2>Importe extratos e deixe a IA trabalhar por você</h2>
-                <p>Baixe o extrato do seu banco em CSV e importe com poucos cliques. Nossa IA aprende seus hábitos e categoriza tudo automaticamente.</p>
+                <h2>Importe seus extratos e deixe a IA fazer o resto</h2>
+                <p>Baixe o extrato ou fatura do seu banco e importe com poucos cliques. Nossa IA aprende seus hábitos e organiza tudo automaticamente.</p>
                 <ul class="spotlight-list">
-                    <li>Compatível com extratos de qualquer banco brasileiro</li>
-                    <li>Mapeamento inteligente de colunas (data, descrição, valor)</li>
-                    <li>Categorização em lote com memória de estabelecimentos</li>
-                    <li>Revisão linha a linha antes de confirmar a importação</li>
-                    <li>Machine learning local — seus dados nunca saem do Mac</li>
+                    <li>Funciona com extratos e faturas de qualquer banco brasileiro</li>
+                    <li>O app identifica os dados automaticamente (data, descrição, valor)</li>
+                    <li>Categorização automática — o app lembra das suas lojas e compras</li>
+                    <li>Revise tudo antes de confirmar a importação</li>
+                    <li>Inteligência artificial local — seus dados nunca saem do seu dispositivo</li>
                 </ul>
             </div>
             <div class="spotlight-visual reveal">
                 <div class="spotlight-mockup">
-                    <div style="color: rgba(255,255,255,0.5); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">Importando 48 transações</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">Importando 48 lançamentos</div>
                     <div class="mockup-row">
                         <div class="mockup-dot green"></div>
                         <span class="mockup-label">Supermercado BH</span>
@@ -905,8 +925,8 @@
                     <tr><td>Subcategorias</td><td class="lim">Máx. 2</td><td class="ck">Ilimitadas</td></tr>
 
                     <tr class="comp-section-header"><td colspan="3">Controle Avançado</td></tr>
-                    <tr class="new-row"><td>Contas a Pagar + Notificações</td><td class="cx">✗</td><td class="ck">✓</td></tr>
-                    <tr class="new-row"><td>Orçamentos por Categoria</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Contas a Pagar + Notificações</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Orçamentos por Categoria</td><td class="cx">✗</td><td class="ck">✓</td></tr>
                     <tr><td>Cartão de Benefícios (VR/VA/VT)</td><td class="cx">✗</td><td class="ck">✓</td></tr>
                     <tr><td>Multi-Pessoa</td><td class="ck">✓</td><td class="ck">✓</td></tr>
 
@@ -914,12 +934,12 @@
                     <tr><td>Investimentos (Ações, FIIs, RF)</td><td class="cx">✗</td><td class="ck">✓</td></tr>
                     <tr><td>Aportes e Dividendos</td><td class="cx">✗</td><td class="ck">✓</td></tr>
                     <tr><td>Relatórios e Gráficos</td><td class="cx">✗</td><td class="ck">✓</td></tr>
-                    <tr><td>Auditoria Financeira</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Verificar erros e inconsistências</td><td class="cx">✗</td><td class="ck">✓</td></tr>
 
                     <tr class="comp-section-header"><td colspan="3">Dados & Sincronização</td></tr>
                     <tr><td>IA Categorização Automática</td><td class="cx">✗</td><td class="ck">✓</td></tr>
-                    <tr><td>Importar CSV (extratos bancários)</td><td class="cx">✗</td><td class="ck">✓</td></tr>
-                    <tr><td>Export/Import de backup</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Importar extratos e faturas</td><td class="cx">✗</td><td class="ck">✓</td></tr>
+                    <tr><td>Backup dos seus dados</td><td class="cx">✗</td><td class="ck">✓</td></tr>
                     <tr><td>Sincronização iCloud</td><td class="cx">✗</td><td class="ck">✓</td></tr>
                 </tbody>
             </table>
@@ -934,19 +954,19 @@
             <div class="premium-text reveal">
                 <span class="section-label" style="text-align:left; color:#4ade80;">👑 Premium</span>
                 <h2>Leve suas finanças ao próximo nível</h2>
-                <p>Recursos avançados para quem leva o controle financeiro a sério. Sem mensalidade cara, sem pegadinhas.</p>
+                <p>Tudo que você precisa para organizar seu dinheiro de verdade. Sem pegadinhas.</p>
                 <ul class="prem-list">
                     <li class="highlight"><span class="check-icon">✓</span> Contas a Pagar com notificações automáticas</li>
                     <li class="highlight"><span class="check-icon">✓</span> Orçamentos por categoria mês a mês</li>
                     <li><span class="check-icon">✓</span> Investimentos: Ações, FIIs e Renda Fixa</li>
                     <li><span class="check-icon">✓</span> Relatórios e gráficos detalhados</li>
                     <li><span class="check-icon">✓</span> IA que categoriza automaticamente</li>
-                    <li><span class="check-icon">✓</span> Importar extratos CSV de qualquer banco</li>
-                    <li><span class="check-icon">✓</span> Export/Import para backup</li>
+                    <li><span class="check-icon">✓</span> Importar extratos e faturas de qualquer banco</li>
+                    <li><span class="check-icon">✓</span> Backup completo dos seus dados</li>
                     <li><span class="check-icon">✓</span> Contas, cartões e categorias ilimitados</li>
                     <li><span class="check-icon">✓</span> Cartão de Benefícios (VR, VA, VT)</li>
                     <li><span class="check-icon">✓</span> Sincronização iCloud entre dispositivos</li>
-                    <li><span class="check-icon">✓</span> Auditoria financeira para encontrar erros</li>
+                    <li><span class="check-icon">✓</span> Encontre erros e inconsistências automaticamente</li>
                 </ul>
                 <a href="#pricing" class="btn btn-grad">Ver preços →</a>
             </div>
@@ -982,10 +1002,10 @@
                 <a href="https://apps.apple.com/br/app/cosmo-finan%C3%A7as/id6758966021?mt=12" class="price-btn price-btn-outline">Começar grátis</a>
             </div>
             <div class="price-card featured">
-                <div class="price-badge">Melhor valor — 2 meses grátis</div>
+                <div class="price-badge">Melhor valor — economize R$&thinsp;12,90/ano</div>
                 <h3>Anual</h3>
                 <div class="price-amount"><sup>R$</sup>69<span style="font-size:2rem;">,90</span> <span>/ano</span></div>
-                <div class="price-detail">14 dias grátis · Equivale a R$&thinsp;5,83/mês</div>
+                <div class="price-detail">14 dias grátis · Menos que um café por mês</div>
                 <ul class="price-features">
                     <li>Todos os recursos Premium</li>
                     <li>Contas a Pagar + Notificações</li>
@@ -1031,7 +1051,7 @@
                     <span class="faq-chevron">▾</span>
                 </div>
                 <div class="faq-answer">
-                    Sim. A importação aceita qualquer arquivo CSV. O app tem um mapeador inteligente de colunas que identifica automaticamente as colunas de data, descrição e valor. Compatível com extratos de praticamente qualquer banco brasileiro que ofereça exportação em CSV ou OFX convertido para CSV.
+                    Sim! Basta baixar o extrato ou fatura do site/app do seu banco e importar no Cosmo Finanças. O app identifica automaticamente as informações de data, descrição e valor. Funciona com praticamente qualquer banco brasileiro.
                 </div>
             </div>
             <div class="faq-item">
@@ -1058,7 +1078,7 @@
                     <span class="faq-chevron">▾</span>
                 </div>
                 <div class="faq-answer">
-                    Seus dados ficam no seu Mac para sempre. Ao cancelar o Premium, o app passa a funcionar no modo gratuito — você pode visualizar todos os dados históricos, mas as funcionalidades Premium ficam bloqueadas para edição. Recomendamos usar a função Export antes de cancelar para ter um backup completo.
+                    Seus dados ficam no seu Mac para sempre. Ao cancelar o Premium, o app passa a funcionar no modo gratuito — você pode ver todos os dados, mas as funções Premium ficam bloqueadas. Recomendamos fazer um backup antes de cancelar.
                 </div>
             </div>
         </div>
@@ -1094,7 +1114,7 @@
                 <a href="#features">Contas a Pagar</a>
                 <a href="#features">Orçamentos</a>
                 <a href="#features">Investimentos</a>
-                <a href="#features">Importar CSV</a>
+                <a href="#features">Importar Extrato</a>
                 <a href="#features">iCloud Sync</a>
             </div>
             <div class="footer-col">
