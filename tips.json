@@ -4,7 +4,7 @@
     {
       "id": "import-csv-revisao",
       "title": "Importe extratos com menos esforço",
-      "message": "Após corrigir categorias em um CSV, importe novamente arquivos parecidos para o app sugerir categorias automaticamente.",
+      "message": "Depois de organizar as categorias de um extrato, o app aprende e sugere automaticamente nos próximos.",
       "icon": "square.and.arrow.down.on.square"
     },
     {
